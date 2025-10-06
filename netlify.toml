@@ -5,3 +5,7 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# Augmente le délai d'attente pour la fonction coach
+[functions.coach]
+  timeout = 25

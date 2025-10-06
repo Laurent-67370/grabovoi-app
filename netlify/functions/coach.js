@@ -1,17 +1,28 @@
 // Fichier : netlify/functions/coach.js
 
-exports.handler = async function (event, context) {
-    // On vérifie que la requête est une requête POST
+// On importe la bibliothèque node-fetch
+const fetch = require('node-fetch');
+
+exports.handler = async function (event) {
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
+    const apiKey = process.env.DEEPSEEK_API_KEY;
+
+    if (!apiKey) {
+        console.error("Erreur critique: La variable d'environnement DEEPSEEK_API_KEY n'est pas définie.");
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: "Configuration du serveur incomplète." })
+        };
+    }
+
     try {
         const { conversationHistory } = JSON.parse(event.body);
-        const apiKey = process.env.DEEPSEEK_API_KEY; // Récupère la clé depuis les variables d'environnement Netlify
 
-        if (!apiKey) {
-            throw new Error("La clé API n'est pas configurée sur le serveur.");
+        if (!conversationHistory) {
+            return { statusCode: 400, body: JSON.stringify({ error: "L'historique de la conversation est manquant." }) };
         }
 
         const response = await fetch('https://api.deepseek.com/chat/completions', {
@@ -28,12 +39,13 @@ exports.handler = async function (event, context) {
             })
         });
 
+        // Gestion améliorée des erreurs de l'API externe
         if (!response.ok) {
-            const errorBody = await response.text();
-            console.error('Erreur de l\'API DeepSeek:', errorBody);
+            const errorText = await response.text();
+            console.error(`Erreur de l'API DeepSeek (${response.status}):`, errorText);
             return {
                 statusCode: response.status,
-                body: JSON.stringify({ error: `Erreur de l'API externe: ${response.statusText}` })
+                body: JSON.stringify({ error: `L'API du coach a retourné une erreur: ${response.statusText}` })
             };
         }
 
@@ -46,10 +58,10 @@ exports.handler = async function (event, context) {
         };
 
     } catch (error) {
-        console.error('Erreur dans la fonction Netlify:', error);
+        console.error('Erreur inattendue dans la fonction coach:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Erreur interne du serveur.' })
+            body: JSON.stringify({ error: 'Une erreur interne est survenue.' })
         };
     }
 };

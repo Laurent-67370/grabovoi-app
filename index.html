@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#302b63"/>
+    <title>Exercices Quotidiens Grabovoï</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="theme-cosmic"> <!-- Thème par défaut -->
+    <div class="container">
+        <header>
+            <div class="header-top-row">
+                <h1>Évoluer avec Grigori Grabovoï</h1>
+                <div class="header-icons">
+                    <button id="trophies-btn" class="icon-btn" aria-label="Trophées">🏆</button>
+                    <button id="settings-btn" class="icon-btn" aria-label="Paramètres">⚙️</button>
+                </div>
+            </div>
+            <p class="subtitle">Exercices d'expansion de conscience quotidiens</p>
+            
+            <p id="main-intention-display" class="main-intention"></p>
+            
+            <div class="header-buttons">
+                <button id="about-btn" class="about-button">À propos</button>
+                <button id="progress-btn" class="progress-button">Progression</button>
+            </div>
+
+            <div class="stats-display">
+                <div class="stat-item">
+                    <span class="stat-value" id="streak-counter">0</span>
+                    <span class="stat-label">Jours de suite 🔥</span>
+                </div>
+            </div>
+
+            <div class="day-navigation">
+                <button id="prev-day-btn" class="nav-btn" aria-label="Jour précédent">&lt;</button>
+                <div class="day-selector-wrapper">
+                    <select id="day-selector"></select>
+                </div>
+                <button id="next-day-btn" class="nav-btn" aria-label="Jour suivant">&gt;</button>
+                <button id="today-btn" class="nav-btn-today">Aujourd'hui</button>
+            </div>
+        </header>
+
+        <div class="main-content-wrapper">
+            <div class="loader" id="loader"></div>
+            <main id="exercise-content" class="hidden">
+                <h2 id="exercise-title"></h2>
+                <p id="exercise-theme"></p>
+                <div class="exercise-part" id="part1-content"></div>
+                <div class="sequences">
+                    <h3>Séries Numériques du Jour</h3>
+                    <p>7 chiffres : <span id="sequence7"></span></p>
+                    <p>9 chiffres : <span id="sequence9"></span></p>
+                </div>
+                <div class="exercise-part" id="part3-content"></div>
+
+                <div class="interactive-section">
+                    <button id="mark-complete-btn" class="complete-btn">Marquer comme terminé</button>
+                    <div class="journal-section">
+                        <label for="journal-text" id="journal-label">Mon journal pour cet exercice :</label>
+                        <textarea id="journal-text" placeholder="Notez ici vos intentions, ressentis..."></textarea>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Science of Eden Inspired App</p>
+        </footer>
+    </div>
+
+    <!-- --- FENÊTRES MODALES --- -->
+
+    <!-- Fenêtre Modale À Propos -->
+    <div id="about-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="about-modal-close-btn" class="modal-close-btn">&times;</button>
+            <h2>À propos de la méthode</h2>
+            <div class="modal-section">
+                <h3>Qui est Grigori Grabovoï ?</h3>
+                <p>Né en 1963 au Kazakhstan, Grigori Grabovoï est un scientifique et clairvoyant russe. Diplômé en mathématiques appliquées et en médecine, il est membre de plusieurs académies scientifiques. Grabovoï a affirmé posséder des dons de clairvoyance, de prévision et de guérison, qu'il a appliqués notamment dans le domaine de l'aviation russe pour diagnostiquer à distance des défaillances techniques sur des avions et des stations spatiales.</p>
+                <p>Ses enseignements se concentrent sur le "pilotage de la réalité" et la "restauration de l'organisme" par la concentration de la conscience, notamment via des séquences numériques spécifiques.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Que sont ces exercices ?</h3>
+                <p>Ces exercices quotidiens sont conçus pour développer la conscience et permettre de gérer consciemment les événements de sa vie. Ce ne sont pas de simples méditations, mais des techniques de concentration structurées destinées à retrouver des facultés perdues et à restaurer l'harmonie en soi et sur la planète.</p>
+                <p>Le principe fondamental est de se concentrer sur un objectif personnel tout en s'assurant que sa réalisation soit toujours en harmonie avec le plus grand bien de tous.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fenêtre Modale du Calendrier -->
+    <div id="calendar-modal" class="modal-overlay">
+        <div class="modal-content calendar-modal-content">
+            <button id="calendar-close-btn" class="modal-close-btn">&times;</button>
+            <h2>Ma Progression</h2>
+            <div class="calendar-search-wrapper">
+                <input type="search" id="calendar-search" placeholder="Rechercher dans le journal...">
+            </div>
+            <div class="calendar-header">
+                <button id="calendar-prev-month" class="calendar-nav">&lt;</button>
+                <h3 id="calendar-month-year"></h3>
+                <button id="calendar-next-month" class="calendar-nav">&gt;</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-weekdays"></div>
+                <div class="calendar-days"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fenêtre Modale des Trophées -->
+    <div id="trophies-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="trophies-close-btn" class="modal-close-btn">&times;</button>
+            <h2>Mes Trophées</h2>
+            <div id="trophies-grid" class="trophies-grid"></div>
+        </div>
+    </div>
+
+    <!-- Fenêtre Modale des Paramètres -->
+    <div id="settings-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="settings-close-btn" class="modal-close-btn">&times;</button>
+            <h2>Paramètres</h2>
+            <div class="modal-section">
+                <h3>Mon Intention Principale</h3>
+                <p class="settings-description">Définissez un objectif global qui s'affichera pour vous inspirer.</p>
+                <textarea id="main-intention-input" placeholder="Ex: Retrouver une parfaite santé et harmonie..."></textarea>
+            </div>
+            <div class="modal-section">
+                <h3>Thème Visuel</h3>
+                <p class="settings-description">Choisissez l'ambiance qui vous convient le mieux.</p>
+                <div id="theme-selector" class="theme-selector">
+                    <button class="theme-btn" data-theme="cosmic">Cosmique</button>
+                    <button class="theme-btn" data-theme="nature">Nature</button>
+                    <button class="theme-btn" data-theme="serenity">Sérénité</button>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>Mes Données</h3>
+                <p class="settings-description">Sauvegardez ou restaurez votre progression et votre journal.</p>
+                <div class="button-group">
+                    <button id="export-data-btn" class="export-button">Exporter mes données</button>
+                    <button id="import-data-btn" class="import-button">Importer une sauvegarde</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fenêtre Modale du Chatbot Coach -->
+    <div id="chatbot-modal" class="modal-overlay">
+        <div class="modal-content chatbot-modal-content">
+            <button id="chatbot-close-btn" class="modal-close-btn">&times;</button>
+            <h2>Votre Coach Grabovoï</h2>
+            <div id="chat-messages" class="chat-messages">
+                <!-- Les messages du chat apparaîtront ici -->
+            </div>
+            <form id="chat-form" class="chat-form">
+                <input type="text" id="chat-input" placeholder="Posez une question sur l'exercice..." autocomplete="off">
+                <button type="submit" id="chat-send-btn">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bouton flottant pour ouvrir le chat -->
+    <button id="open-chat-btn" class="fab">💬</button>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => console.log('Service Worker enregistré avec succès:', registration))
+                    .catch(error => console.log('Échec de l\'enregistrement du Service Worker:', error));
+            });
+        }
+    </script>
+</body>
+</html>

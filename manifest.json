@@ -1,0 +1,21 @@
+{
+  "name": "Exercices Grabovoï",
+  "short_name": "Grabovoï",
+  "description": "Exercices quotidiens d'expansion de conscience de Grigori Grabovoï.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0c29",
+  "theme_color": "#302b63",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

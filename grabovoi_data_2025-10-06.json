@@ -1,0 +1,24 @@
+{
+  "completed": {
+    "2025-10-05": true,
+    "2025-10-06": true,
+    "2025-10-07": true,
+    "2025-10-08": true,
+    "2025-10-09": true
+  },
+  "journal": {
+    "5": "Ok super ressenti ",
+    "2025-10-05": "Super ressenti",
+    "2025-10-06": "Super ",
+    "2025-10-07": "Attention ",
+    "2025-10-08": "A tester"
+  },
+  "settings": {
+    "theme": "nature",
+    "mainIntention": "Trouver plus de concentration"
+  },
+  "unlockedTrophies": [
+    "first_practice",
+    "scribe"
+  ]
+}
